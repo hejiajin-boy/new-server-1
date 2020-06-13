@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div p {
+            color: red;
+            text-align: center;
+            font-size: larger;
+            font-style: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="signInForm">
+        <div>
+            <label for="">用户名 <input type="text" name="name"></label>
+
+        </div>
+        <div>
+            <label for="">密码<input type="text" name="password"></label>
+        </div>
+        <button>登录</button>
+    </form>
+    <!-- 先引用jQuery，再使用 -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        const $form = $('#signInForm')
+        $form.on('submit', (e) => {
+            e.preventDefault() //阻止默认事件，防止刷新
+            const name = $form.find('input[name = name]').val() //在表单里找name
+            const password = $form.find('input[name=password]').val() //在表单找password
+            console.log(name, password)
+
+            // 提交 （AJAX请求）上传一个JSON文件
+            $.ajax({
+                method: 'POST', //默认是GET请求
+                url: '/sign_in',
+                contentType: 'text/json;charset=UTF-8', // 请求的数据为json文件
+                data: JSON.stringify({
+                        name,
+                        password
+                    })
+                    //注册之后提醒
+            }).then(() => {
+                alert('小可爱你回来了！')
+                location.href = '/home.html'
+            }, () => {})
+        })
+    </script>
+
+
+</body>
+
+</html>
